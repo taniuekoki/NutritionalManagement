@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食事追加</title>
+   <!--CSS読み込み-->
+   	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/editGoal.css}">
+	
+	<!--js読み込み-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+<body>
+	<!-- ナビゲーション -->
+    <nav layout:replace="~{layout/header::header}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="containe" >
+		<h1 class="h1 my-5 text-center">目標編集</h1>
+		<th:block th:if="${success}">
+			<p class="h3 text-center mb-5">
+				変更完了しました
+			</p>
+		</th:block>
+		
+		<form th:action="@{/setting/editGoal}" method="post" th:object="${editGoalForm}" class="text-center">
+		    <!--炭水化物-->
+		    <div class="">
+				<div class="d-flex justify-content-between">
+			        <label for="carbohydrates" class="form-label m-auto" th:text="#{carbohydrates}"></label>
+			        <div class="text-center w-50">
+				        <input type="text" class="form-control" th:field="*{carbohydrates}" th:errorclass="is-invalid">
+				        <div class="invalid-feedback" th:errors="*{carbohydrates}"></div>
+			        </div>
+		        </div>
+		    </div>
+	        
+	        <!--脂質-->
+		    <div class="mt-3 mb-3">
+				<div class="d-flex justify-content-between">
+			        <label for="lipid" class="form-label m-auto" th:text="#{lipid}"></label>
+			        <div class="text-center w-50">
+				        <input type="text" class="form-control" th:field="*{lipid}" th:errorclass="is-invalid">
+				        <div class="invalid-feedback" th:errors="*{lipid}"></div>
+			        </div>
+		        </div>
+		    </div>
+		    
+		    <!--タンパク質-->
+		    <div class="mt-3 mb-3">
+				<div class="d-flex justify-content-between">
+			        <label for="protein" class="form-label m-auto" th:text="#{protein}"></label>
+			        <div class="text-center w-50">
+				        <input type="text" class="form-control" th:field="*{protein}" th:errorclass="is-invalid">
+				        <div class="invalid-feedback" th:errors="*{protein}"></div>
+			        </div>
+		        </div>
+		    </div>
+		    
+		    <!--カロリー-->
+		    <div class="mt-3 mb-3">
+				<div class="d-flex justify-content-between">
+			        <label for="calorie" class="form-label m-auto" th:text="#{calorie}"></label>
+			        <div class="text-center w-50">
+				        <input type="text" class="form-control" th:field="*{calorie}" th:errorclass="is-invalid">
+				        <div class="invalid-feedback" th:errors="*{calorie}"></div>
+			        </div>
+		        </div>
+		    </div>
+		    
+	        <div class="text-center">
+	        	<button type="submit" class="btn btn-primary">完了</butto>
+	        </div>
+	    </form>
+	</div>
+</body>
+</html>

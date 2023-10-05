@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイフード一覧</title>
+   <!--CSS読み込み-->
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+	<!--js読み込み-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+
+<body>
+    <!-- ナビゲーション -->
+    <nav layout:replace="~{layout/header::header}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="container" >
+		<!--食事内容ここから-->
+		<div>
+			<p class="text-center h1 mt-5">フード検索</p>
+			
+			<form th:action="@{/addFood/myFoodSearch}" method="post">
+				<div class="input-group my-5">
+					<input type="text" class="form-control" placeholder="キーワードを入力" name="search" th:value="${search}">
+					<button class="btn btn-outline-success" type="submit" id="button-addon2"><i class="fas fa-search"></i> 検索</button>
+				</div>
+			</form>
+			
+			<table class="table table-striped text-center my-5">
+			    <thead>
+			        <tr>
+			            <th>食事名</th>
+			            <th>炭水化物</th>
+			            <th>脂質</th>
+			            <th>タンパク質</th>
+			            <th>カロリー</th>
+			            <th>追加</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+					<!--POST判定-->
+					<th:block th:if="${request} == 'post'">
+				        <tr th:each="food:${foodList}">
+				            <td th:text="*{food.mealName}"></td>
+				            <td th:text="*{food.carbohydrates}+'g'"></td>
+				            <td th:text="*{food.lipid}+'g'"></td>
+				            <td th:text="*{food.protein}+'g'"></td>
+				            <td th:text="((*{food.carbohydrates} + *{food.protein})* 4 + *{food.lipid} * 9)+'kcal'">kcal</td>
+				            <td>
+								<a class="btn btn-primary" th:href="@{'/addFood/addMyFood/'+*{food.id}}">追加</a>
+							</td>
+				        </tr>
+				    </th:block>
+			    </tbody>
+			</table>
+			
+		</div>
+    </div>
+    <!-- コンテナ ここまで -->
+</body>
+</html>

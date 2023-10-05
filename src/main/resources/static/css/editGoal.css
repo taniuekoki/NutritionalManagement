@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+.containe{
+	width: 400px;
+	margin:auto;
+}
+@media screen and (max-width:480px){
+	.containe{
+	width: 300px;
+	margin:auto;
+}
+}

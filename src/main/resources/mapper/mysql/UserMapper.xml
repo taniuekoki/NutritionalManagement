@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="katachi.spring.repository.UserMapper">
+
+
+<!-- ログインユーザー情報取得 -->
+<select id="findLoginUser" resultType="DBUser">
+select * from users where user = #{userName}
+</select>
+
+<!-- ログインユーザー目標取得 -->
+<select id="getGoal" resultType="Nutrition">
+select * from goal where user_id = #{userId}
+</select>
+
+<!-- ログインユーザー食事内容取得 -->
+<select id="getFoodList" resultType="Nutrition">
+select * from diary where user_id = #{userId} and diary_date =  DATE_FORMAT(#{date},'%Y-%m-%d');
+</select>
+
+<!-- ログインユーザー一日摂取内容取得 -->
+<select id="getSumIntake" resultType="Nutrition">
+select sum(carbohydrates) as carbohydrates,sum(lipid) as lipid,sum(protein) as protein from diary where user_id = #{userId} and diary_date =  DATE_FORMAT(#{date},'%Y-%m-%d');
+</select>
+
+<!-- 食事内容追加 -->
+<insert id="addDiary">
+insert into diary (meal_name,carbohydrates,lipid,protein,diary_date,user_id) values (#{nutrition.mealName},#{nutrition.carbohydrates},#{nutrition.lipid},#{nutrition.protein},now(),#{userId})
+</insert>
+
+<!-- マイフード取得 -->
+<select id="getMyFood" resultType="Nutrition">
+select * from myfood
+	<where>
+		<if test="userId != null">
+		 user_id  = #{userId}
+		</if>
+	</where>
+</select>
+
+<!-- マイフード１つ取得 -->
+<select id="getMyFoodOneRecord" resultType="Nutrition">
+select * from myfood where id = #{id};
+</select>
+
+<!-- フード検索 -->
+<select id="getMyFoodSearchName" resultType="Nutrition">
+select * from myfood where meal_name like '%${search}%'
+</select>
+
+<!-- 目標編集 -->
+<update id="updateEditGoal">
+update goal set carbohydrates = #{nutrition.carbohydrates},lipid = #{nutrition.lipid},protein = #{nutrition.protein},calorie = #{nutrition.calorie} where user_id = #{userId}
+</update>
+
+<!-- マイフード編集 -->
+<update id="updateEditMyFood">
+update myfood set meal_name = #{nutrition.mealName},carbohydrates = #{nutrition.carbohydrates},lipid = #{nutrition.lipid},protein = #{nutrition.protein} where id = #{id}
+</update>
+
+<!-- 食事内容削除 -->
+<delete id="deleteDiaryOne">
+delete from diary where id = #{id}
+</delete>
+
+<!-- マイフード登録 -->
+<insert id="addMyFood">
+insert into myfood (meal_name,carbohydrates,lipid,protein,user_id) values (#{nutrition.mealName},#{nutrition.carbohydrates},#{nutrition.lipid},#{nutrition.protein},#{userId})
+</insert>
+
+</mapper>

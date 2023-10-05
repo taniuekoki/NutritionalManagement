@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ホーム</title>
+   <!--CSS読み込み-->
+	<link rel="stylesheet" th:href="@{/css/reset.css}">
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/home.css}">
+	<!--js読み込み-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+<!--	<script th:src="@{/js/home.js}"></script>-->
+</head>
+
+<body>
+    <!-- ナビゲーション -->
+    <nav layout:replace="~{layout/header::header}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="container" >
+		
+		<form th:action="@{/home}" method="post" class="my-5">
+			<div class="flex">
+				<button class="h1" th:text="#{left}" name="back" th:value="${#dates.format(date,'yyyy/MM/dd')}"></button>
+				<p class="h1 mx-3 date" th:text="${#dates.format(date,'yyyy年MM月dd日')}"></p>
+				<button class="h1" th:text="#{right}" name="next" th:value="${#dates.format(date,'yyyy/MM/dd')}"></button>
+			</div>
+		</form>
+		
+		<!--各栄養素ここから-->
+		<div>
+			<p class="text-center h1">栄養素</p>
+			
+			<ul class="flex2 h3">
+				<li class="text-center">炭水化物</li>
+				<li class="text-center">脂質</li>
+				<li class="text-center">タンパク質</li>
+			</ul>
+			
+			<!--グラフ-->
+			<ul class="flex flex2" th:object="${totalIntake}">
+				<li class="pie" th:style="'background-image:radial-gradient(#ffffff 60%, transparent 61%),conic-gradient(#1BFF4A 0% '+(*{carbohydrates} / ${userGoal.carbohydrates} * 100)+'%, #d9d9d9 '+(*{carbohydrates} / ${userGoal.carbohydrates} * 100)+'% 100%);'" th:text="*{carbohydrates}+'g'"></li>
+				<li class="pie" th:style="'background-image:radial-gradient(#ffffff 60%, transparent 61%),conic-gradient(#FF570D 0% '+(*{lipid} / ${userGoal.lipid} * 100)+'%, #d9d9d9 '+(*{lipid} / ${userGoal.lipid} * 100)+'% 100%);'" th:text="*{lipid}+'g'"></li>
+				<li class="pie" th:style="'background-image:radial-gradient(#ffffff 60%, transparent 61%),conic-gradient(#2C7CFF 0% '+(*{protein} / ${userGoal.protein} * 100)+'%, #d9d9d9 '+(*{protein} / ${userGoal.protein} * 100)+'% 100%);'" th:text="*{protein}+'g'"></li>
+			</ul>
+			
+			<!--目標g-->
+			<ul class="flex flex2 h3"  th:object="${userGoal}">
+				<li th:text="'目標：'+*{carbohydrates}+'g'"></li>
+				<li th:text="'目標：'+*{lipid}+'g'"></li>
+				<li th:text="'目標：'+*{protein}+'g'"></li>
+			</ul>
+			
+			<!--摂取g-->
+			<ul class="flex2 h3"  th:object="${totalIntake}">
+				<!--炭水化物-->
+				<th:block th:if="(${userGoal.carbohydrates} - *{carbohydrates}) > 0">
+					<li th:text="'残り'+(${userGoal.carbohydrates} - *{carbohydrates})+'g'"></li>
+				</th:block>
+				<th:block th:if="(${userGoal.carbohydrates} - *{carbohydrates}) < 0">
+					<li th:text="(*{carbohydrates} - ${userGoal.carbohydrates})+'gオーバーです'"></li>
+				</th:block>
+				
+				<!--脂質-->
+				<th:block th:if="(${userGoal.lipid} - *{lipid}) > 0">
+					<li th:text="'残り'+(${userGoal.lipid} - *{lipid})+'g'"></li>
+				</th:block>
+				<th:block th:if="(${userGoal.lipid} - *{lipid}) < 0">
+					<li th:text="(*{lipid} - ${userGoal.lipid})+'gオーバーです'"></li>
+				</th:block>
+				
+				<!--タンパク質-->
+				<th:block th:if="(${userGoal.protein} - *{protein}) > 0">
+					<li th:text="'残り'+(${userGoal.protein} - *{protein})+'g'"></li>
+				</th:block>
+				<th:block th:if="(${userGoal.protein} - *{protein}) < 0">
+					<li th:text="(*{protein} - ${userGoal.protein})+'gオーバーです'"></li>
+				</th:block>
+			</ul>
+		</div>
+		<!--各栄養素ここまで-->
+		
+		
+		<!--カロリーここから-->
+		<div>
+			<p class="text-center h1 mt-5">カロリー</p>
+			<ul class="flex">
+				<li class="pie rem pie2" th:style="'background-image:radial-gradient(#ffffff 60%, transparent 61%),conic-gradient(#FFFF00 0% '+(${calorieIntake} / ${userGoal.calorie} * 100)+'%, #d9d9d9 '+(${calorieIntake} / ${userGoal.calorie} * 100)+'% 100%);'" th:text="${calorieIntake}+'kcal'"></li>
+				<li class="h3 mt-6 my-auto">
+					
+					<p class="mt-6" th:text="'摂取カロリー：'+${calorieIntake}+'kcal'" th:classappend="${(userGoal.calorie - calorieIntake) < 0 ? 'text-danger' : ''}"></p>
+					
+					<p class="" th:text="'目標カロリー：'+${userGoal.calorie}+'kcal'"></p>
+				</li>
+			</ul>
+		</div>
+		<!--カロリーここまで-->
+		
+		
+		<!--食事内容ここから-->
+		<div>
+			<p class="text-center h1 mt-5">食事内容</p>
+			<table class="table table-striped text-center">
+			    <thead>
+			        <tr>
+			            <th>食事名</th>
+			            <th>炭水化物</th>
+			            <th>脂質</th>
+			            <th>タンパク質</th>
+			            <th>カロリー</th>
+			            <th>削除</th>
+			        </tr>
+			    </thead>
+			    <tbody>
+			        <tr th:each="food:${foodList}">
+			            <td th:text="*{food.mealName}"></td>
+			            <td th:text="*{food.carbohydrates}+'g'"></td>
+			            <td th:text="*{food.lipid}+'g'"></td>
+			            <td th:text="*{food.protein}+'g'"></td>
+			            <td th:text="((*{food.carbohydrates} + *{food.protein})* 4 + *{food.lipid} * 9)+'kcal'">kcal</td>
+			            <td>
+							<a class="btn btn-primary" th:href="@{'/home/delete/'+*{food.id}}">削除</a>
+						</td>
+			        </tr>
+			    </tbody>
+			</table>
+		</div>
+		<!--食事内容ここまで-->
+    </div>
+    <!-- コンテナ ここまで -->
+</body>
+</html>

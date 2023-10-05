@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ログイン</title>
+<!--CSS読み込み-->
+<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/css/index.css}">
+<!--js読み込み-->
+<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+
+</head>
+
+<body>
+<header th:fragment="header" layout:fragment="header">
+		 <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+		    <a class="navbar-brand" href="#">栄養管理Webアプリ</a>
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		
+		    <div class="collapse navbar-collapse" id="navbar">
+		      <ul class="navbar-nav mr-auto">
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/login}">ログイン</a>
+		        </li>
+		      </ul>
+		    </div>
+		  </nav>
+  	</header>
+    <div class="container">
+	    <div class="col-sm-6">
+			<p th:if="${session['SPRING_SECURITY_LAST_EXCEPTION']} != null" 
+			th:text="${session['SPRING_SECURITY_LAST_EXCEPTION'].message}" 
+			class="text-danger">
+			ログインエラーメッセージ
+			</p>
+			<form th:action="@{/login}" method="post" th:object="${form}">
+			    
+			    <!--名前-->
+			    <div class="mt-3 mb-3">
+			        <label for="name" class="form-label" th:text="#{userName}"></label>
+			        <input type="text" class="form-control" th:field="*{userName}" th:errorclass="is-invalid">
+			        <div class="invalid-feedback" th:errors="*{userName}"></div>
+			    </div>
+			    
+			    <!--パスワード-->
+	            <div class="form-group">
+	                <label for="password" th:text="#{password}"></label>
+	                <input type="password" class="form-control" th:field="*{password}" th:errorclass="is-invalid">
+	            	<div class="invalid-feedback" th:errors="*{password}"></div>
+	            </div>
+	            
+	            <button type="submit" class="btn btn-primary">ログイン</button>
+	        </form>
+	    </div>
+	    <div class="col-sm-3"></div>
+    </div>
+</body>
+</html>

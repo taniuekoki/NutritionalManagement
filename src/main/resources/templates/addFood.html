@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>食事追加</title>
+   <!--CSS読み込み-->
+   	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"/>
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<!--js読み込み-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+<body>
+	<!-- ナビゲーション -->
+    <nav layout:replace="~{layout/header::header}"></nav>
+    <!-- ナビゲーション ここまで -->
+
+    <!-- コンテナ -->
+    <div class="container" >
+		<h1 class="h1 my-5 text-center">食事追加</h1>
+		<div class="row">
+            <div class="col-md">
+                <a th:href="@{/addFood/addQuick}" class="btn btn-outline-primary btn-block my-5 btn-lg">クイック追加</a>
+                <a th:href="@{/addFood/myFood}" class="btn btn-outline-secondary btn-block my-5 btn-lg">マイフード</a>
+                <a th:href="@{/addFood/myFoodSearch}" class="btn btn-outline-success btn-block my-5 btn-lg">フード検索</a>
+            </div>
+        </div>
+	</div>
+</body>
+</html>

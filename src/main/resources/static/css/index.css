@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+html {
+ overflow-y: scroll;
+}
+.col-sm-6{
+	margin: auto;
+}
+
+header {
+	padding-bottom:4em;
+}
+.title{
+	font-weight: bold;
+	font-size: 1.4rem;
+	color: white;
+	pointer-events: none;
+}
+.titleli{
+	margin: auto;
+	margin-right: 1rem;
+}
+@media screen and (max-width:480px) {
+	header{
+/*		display: none;*/
+	}
+}

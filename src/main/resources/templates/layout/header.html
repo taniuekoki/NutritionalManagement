@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" 
+ xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+ layout:decorate="~{layout/layout}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>作業一覧</title>
+   <!--CSS読み込み-->
+	<link rel="stylesheet" th:href="@{/webjars/bootstrap/css/bootstrap.min.css}">
+	<!--js読み込み-->
+	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
+	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
+</head>
+
+<body>
+    <!-- ナビゲーション -->
+    <header th:fragment="header" layout:fragment="header">
+		 <nav class="navbar navbar-expand-sm navbar-dark bg-primary fixed-top">
+		    <a class="navbar-brand" th:href="@{/home}">栄養管理Webアプリ</a>
+		    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="ナビゲーションの切替">
+		      <span class="navbar-toggler-icon"></span>
+		    </button>
+		
+		    <div class="collapse navbar-collapse" id="navbar">
+		      <ul class="navbar-nav mr-auto">
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/home}">ホーム</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/addFood}">食事追加</a>
+		        </li>
+		        <li class="nav-item">
+		          <a class="nav-link" th:href="@{/setting}">設定</a>
+		        </li>
+		      </ul>
+		      <form class="form-inline mt-2 mt-md-0" th:action="@{/logout}" method="post">
+				      <button class="btn btn-sm btn-outline-light" type="submit">ログアウト</button>
+				</form>
+		    </div>
+		  </nav>
+  	</header>
+    <!-- ナビゲーション ここまで -->
+</body>
+</html>
