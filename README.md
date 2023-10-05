@@ -1,3 +1,4 @@
+https://github.com/taniuekoki/NutritionalManagement/assets/145744921/f2d88db4-b552-47c8-aee2-5df128554ba5
 # NutritionalManagement
 糖尿病や生活習慣病にならために簡単にわかりやすく栄養管理ができるWebアプリをSpringBootを用いて制作しました。
 # 工夫した点
