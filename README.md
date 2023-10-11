@@ -18,4 +18,4 @@ https://github.com/taniuekoki/NutritionalManagement/assets/145744921/f2d88db4-b5
 * 目標編集
 # 実装環境
 バックエンド：Java(SpringBoot),MySQL<br>
-フロントエンド：HTML,CSS(BootStrap)
+フロントエンド：HTML,CSS(BootStrap),Thymeleaf
